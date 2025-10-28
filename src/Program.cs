@@ -1,4 +1,15 @@
+using BugStore.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? String.Empty;
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlite(connectionString);
+});
+
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
